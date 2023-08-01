@@ -1,0 +1,56 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "API Restfull com NodeJs e MongoDB",
+        "description": "API responsável por gerar dados de pessoas.",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/person": {
+            "get": {
+                "tags": ["Person"],
+                "summary": "Obter todos as pessoas cadastradas",
+                "responses": {
+                    "200": {
+                        "description": "Retorna uma lista com os dados das pessoas cadastradas.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Person"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Person": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "description": "ID da pessoa"
+                    },
+                    "name": {
+                        "type": "string",
+                        "description": "Nome da pessoa"
+                    },
+                    "salary": {
+                        "type": "integer",
+                        "description": "Salário da pessoa"
+                    },
+                    "approved": {
+                        "type": "boolean",
+                        "description": "Status da pessoa"
+                    }
+                }
+            }
+        }
+    }
+}
