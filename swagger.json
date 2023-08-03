@@ -1,56 +1,201 @@
 {
-    "openapi": "3.0.0",
-    "info": {
-        "title": "API Restfull com NodeJs e MongoDB",
-        "description": "API responsável por gerar dados de pessoas.",
-        "version": "1.0.0"
-    },
-    "paths": {
-        "/person": {
-            "get": {
-                "tags": ["Person"],
-                "summary": "Obter todos as pessoas cadastradas",
-                "responses": {
-                    "200": {
-                        "description": "Retorna uma lista com os dados das pessoas cadastradas.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "$ref": "#/components/schemas/Person"
-                                    }
-                                }
-                            }
-                        }
-                    }
+  "openapi": "3.0.0",
+  "info": {
+    "title": "API Restfull com NodeJs e MongoDB",
+    "description": "API responsável por gerar dados de pessoas.",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/person": {
+      "get": {
+        "tags": ["Person"],
+        "summary": "Obter todos as pessoas cadastradas",
+        "responses": {
+          "200": {
+            "description": "Retorna uma lista com os dados das pessoas cadastradas.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Person"
+                  }
                 }
+              }
             }
+          }
         }
+      },
+      "post": {
+        "tags": ["Person"],
+        "summary": "Cadastrar dados de uma pessoa",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PersonInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Pessoa inserida no sistema com sucesso!"
+          },
+          "422": {
+            "description": "o nome é obrigatório!"
+          },
+          "421": {
+            "description": "o salário é obrigatório!"
+          },
+          "500": {
+            "description": "Falha ao tentar cadastrar os dados da pessoa!"
+          }
+        }
+      }
     },
-    "components": {
-        "schemas": {
-            "Person": {
-                "type": "object",
-                "properties": {
-                    "id": {
-                        "type": "integer",
-                        "description": "ID da pessoa"
-                    },
-                    "name": {
-                        "type": "string",
-                        "description": "Nome da pessoa"
-                    },
-                    "salary": {
-                        "type": "integer",
-                        "description": "Salário da pessoa"
-                    },
-                    "approved": {
-                        "type": "boolean",
-                        "description": "Status da pessoa"
-                    }
-                }
+    "/person/{id}": {
+      "patch": {
+        "tags": ["Person"],
+        "summary": "Atualizar dados de uma pessoa",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "ID do filme a ser atualizado.",
+            "schema": {
+              "type": "string"
             }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PersonInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Dados da pessoa atualizado com sucesso!"
+          },
+          "422": {
+            "description": "O usuário não foi encontrado!"
+          },
+          "500": {
+            "description": "Falha ao buscar os dados da pessoa!"
+          }
         }
+      },
+      "delete": {
+        "tags": ["Person"],
+        "summary": "Remover uma pessoa",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "ID da pessoa a ser removida.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Usuário removido com sucesso!"
+          },
+          "404": {
+            "description": "O usuário não foi encontrado!"
+          },
+          "500": {
+            "description": "Falha ao excluir o usuário!"
+          }
+        }
+      },
+      "get": {
+        "tags": ["Person"],
+        "summary": "Filtrar usuário pelo ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "ID da pessoa",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Person"
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "O usuário não foi encontrado!"
+          },
+          "500": {
+            "description": "Falha ao buscar o usuário!"
+          }
+        }
+      }
     }
+  },
+  "components": {
+    "schemas": {
+      "Person": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "ID da pessoa"
+          },
+          "name": {
+            "type": "string",
+            "description": "Nome da pessoa"
+          },
+          "salary": {
+            "type": "number",
+            "description": "Salário da pessoa"
+          },
+          "approved": {
+            "type": "boolean",
+            "description": "Status da pessoa"
+          }
+        }
+      },
+      "PersonInput": {
+        "type": "object",
+        "required": ["name", "salary", "approved"],
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Nome da pessoa"
+          },
+          "salary": {
+            "type": "number",
+            "description": "Salário da pessoa"
+          },
+          "approved": {
+            "type": "boolean",
+            "description": "Status da pessoa"
+          }
+        }
+      }
+    }
+  }
 }

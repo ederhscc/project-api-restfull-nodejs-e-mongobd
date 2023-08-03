@@ -9,11 +9,11 @@ router.post('/', async (req, res) => {
 
     // Validação
     if (!name) {
-        res.status(422).json({ error: 'o nome é obrigatório' });
+        res.status(422).json({ error: 'o nome é obrigatório!' });
         return;
 
     } else if (!salary) {
-        res.status(422).json({ error: 'o salário é obrigatório' });
+        res.status(421).json({ error: 'o salário é obrigatório!' });
         return;
     }
 
@@ -31,7 +31,7 @@ router.post('/', async (req, res) => {
         res.status(201).json({ message: 'Pessoa inserida no sistema com sucesso!' });
 
     } catch (error) {
-        res.status(500).json({ error: error });
+        res.status(500).json({ error: "Falha ao tentar cadastrar os dados da pessoa!" });
     }
 });
 
@@ -65,7 +65,7 @@ router.get('/:id', async (req, res) => {
         res.status(200).json(person);
 
     } catch (error) {
-        res.status(500).json({ error: error });
+        res.status(500).json({ message: "Falha ao buscar o usuário!"});
     }
 
 });
@@ -89,10 +89,10 @@ router.patch('/:id', async (req, res) => {
             res.status(422).json({ message: 'O usuário não foi encontrado!' });
         }
 
-        res.status(200).json(person);
+        res.status(200).json({message: "Dados da pessoa atualizado com sucesso!"});
 
     } catch (error) {
-        res.status(500).json({ error: error });
+        res.status(500).send({ message: "Falha ao buscar os dados da pessoa!" });
     }
 });
 
@@ -113,7 +113,7 @@ router.delete('/:id', async (req, res) => {
         res.status(200).json({ message: 'Usuário removido com sucesso!' });
 
     } catch (error) {
-        res.status(500).json({ error: error });
+        res.status(500).json({ message: "Falha ao excluir o usuário!"});
     }
 });
 
