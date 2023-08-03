@@ -24,9 +24,7 @@ app.use('/person', personRoutes);
 
 // rota inicial / endpoint
 app.get('/', (req, res) => {
-
-    // mostrar req
-    res.json({message: 'oi Express!'});
+    res.json({message: 'Oi Express!'});
 });
 
 const DB_USER = process.env.DB_USER;
